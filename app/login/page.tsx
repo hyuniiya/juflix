@@ -3,7 +3,7 @@ import Input from "@/components/elements/Input";
 import Image from "next/image";
 import React, { useCallback, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -67,4 +67,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
