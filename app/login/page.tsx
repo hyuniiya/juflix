@@ -2,8 +2,12 @@
 import Input from "@/components/elements/Input";
 import Image from "next/image";
 import React, { useCallback, useState } from "react";
+import axios from "axios";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Page = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +19,34 @@ const Page = () => {
       currentVariant === "login" ? "회원가입" : "login"
     );
   }, []);
+
+  const login = useCallback(async () => {
+    try {
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        callbackUrl: "/",
+      });
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }, [email, password, router]);
+
+  const register = useCallback(async () => {
+    try {
+      await axios.post("/api/register", {
+        email,
+        name,
+        password,
+      });
+      login();
+    } catch (error) {
+      console.log("");
+    }
+  }, [email, name, password, login]);
+
   return (
     <div className="relative h-full w-full bg-[url('/images/background.jpeg')] bg-no-repeat bg-center bg-fixed bg-cover">
       <div className="w-full h-full bg-black lg:bg-opacity-50">
@@ -48,7 +80,10 @@ const Page = () => {
               type="password"
               onChange={(e: any) => setPassword(e.target.value)}
             />
-            <button className="w-full bg-red-600 text-white rounded-md py-3 mt-10 hover:bg-red-700 transition">
+            <button
+              onClick={variant === "login" ? login : register}
+              className="w-full bg-red-600 text-white rounded-md py-3 mt-10 hover:bg-red-700 transition"
+            >
               {variant === "login" ? "로그인" : "가입하기"}
             </button>
             <p className="text-neutral-500 mt-8">
