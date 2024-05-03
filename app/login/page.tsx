@@ -6,6 +6,9 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+
 const Page = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -93,6 +96,20 @@ const Page = () => {
             >
               {variant === "login" ? "로그인" : "가입하기"}
             </button>
+            <div className="flex flex-row justify-center items-center gap-4 mt-10">
+              <div
+                onClick={() => signIn("google", { callbackUrl: "/" })}
+                className="bg-white w-10 h-10 rounded-full justify-center items-center flex cursor-pointer hover:opacity-70 transition"
+              >
+                <FcGoogle size={24} />
+              </div>
+              <div
+                onClick={() => signIn("github", { callbackUrl: "/" })}
+                className="bg-white w-10 h-10 rounded-full justify-center items-center flex cursor-pointer hover:opacity-70 transition"
+              >
+                <FaGithub size={24} />
+              </div>
+            </div>
             <p className="text-neutral-500 mt-8">
               아직 회원이 아니신가요?
               <span
