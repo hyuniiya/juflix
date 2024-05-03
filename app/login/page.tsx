@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const router = useRouter();
@@ -51,7 +51,14 @@ const Page = () => {
     <div className="relative h-full w-full bg-[url('/images/background.jpeg')] bg-no-repeat bg-center bg-fixed bg-cover">
       <div className="w-full h-full bg-black lg:bg-opacity-50">
         <nav className="px-8 py-3">
-          <Image src="/images/logo.png" alt="logo" width={150} height={60} />
+          <Image
+            src="/images/logo.png"
+            alt="logo"
+            width={150}
+            height={60}
+            loading="eager"
+            priority="high"
+          />
         </nav>
         <div className="flex justify-center ">
           <div className="w-full bg-black bg-opacity-75 px-16 py-16 self-center lg:w-2/5 lg:max-w-md rounded-md">
